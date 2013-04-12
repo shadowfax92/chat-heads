@@ -164,8 +164,8 @@ public class ChatHeadWindow extends StandOutWindow {
 		int icon = getAppIcon();
 		long when = System.currentTimeMillis();
 		Context c = getApplicationContext();
-		String contentTitle = "Running";
-		String contentText = "Chat Head window";
+		String contentTitle =  "Chat Head Running";;
+		String contentText = "Check Help Section of App, to disable this.";
 		String tickerText = String.format("%s: %s", contentTitle, contentText);
 
 		// getPersistentNotification() is called for every new window
@@ -195,8 +195,8 @@ public class ChatHeadWindow extends StandOutWindow {
 		int icon = getHiddenIcon();
 		long when = System.currentTimeMillis();
 		Context c = getApplicationContext();
-		String contentTitle = "Minimized";
-		String contentText = "Chat Head window";
+		String contentTitle ="Chat Head Minimized";
+		String contentText = "Check Help Section of App, to disable this.";
 		String tickerText = String.format("%s: %s", contentTitle, contentText);
 
 		// the difference here is we are providing the same id
