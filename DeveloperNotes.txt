@@ -1,0 +1,49 @@
+v4.1 (from 4.0):
+PLAN:
+i. Remove Notifications
+vi. Add Rater Code
+vii. Hide + button upon opening MessageBox
+viii. Set focus to last item on SMSThreadList
+ix. Change dimensions of MessageBoxWindow
+x. Handling dimension of MessageBoxWindow on opening keyboard for Send.
+_____________________________________________________________________________________________________________________
+v4.0 (from Nikhil's Commit):
+DONE:
+i. New way of getting thread_id is implemented. And it is working for all cases.
+
+v3.3 (from 3.2)
+PLAN:
+				i. Remove Notifications
+				ii. Set MessageBoxWindow title to users phone number.
+				iii. ***Handle the crash when message comes from unknown user.
+iv. Improve the UI of SMS Thread List - Remove the line between rows, remove title of each row
+				v. Add Help Page
+				vi. Add Rater Code
+				vii. Hide + button upon opening MessageBox
+				viii. Set focus to last item on SMSThreadList
+				ix. Change dimensions of MessageBoxWindow
+				x. Handling dimension of MessageBoxWindow on opening keyboard for Send.
+xi. ***Handle crashing of app on item click in SMSThreadList
+_____________________________________________________________________________________________________________________
+v3.2 (from 3.1)
+PLAN:
+i. Develop main_activity.xml
+ii. Set MessageBoxWindow title to users phone number.
+iii. Handle the crash when message comes from unknown user.
+DONE:
+i. Develop main_activity.xml
+_____________________________________________________________________________________________________________________
+v3.1 (from 3.0)
+PLAN:
+i. Solve incorrect classification of messages problem.
+ii. Set MessageBoxWindow title to users phone number.
+iii. Handle the crash when message comes from unknown user.
+
+DONE:
+i. Solved. Just handle the lag issues.
+
+_____________________________________________________________________________________________________________________
+v3.0 (from 2.1 + Nikhil's Code):
+DONE:
+- Combined lates Nikhil's Project (one after MessageBoxWindow closes on touching outside followed by minorchange)
+with my 2.1
