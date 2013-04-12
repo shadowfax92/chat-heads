@@ -6,7 +6,11 @@ import java.util.Locale;
 import wei.mark.standout.StandOutWindow;
 import wei.mark.standout.constants.StandOutFlags;
 import wei.mark.standout.ui.Window;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -140,6 +144,72 @@ public class MessageBoxWindow extends StandOutWindow {
 
 		}
 		return false;
+	}
+
+	
+	public void disableNotifications() {
+		NotificationManager notifyObject;
+		notifyObject = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		notifyObject.cancelAll();
+	}
+	
+	@Override
+	public Notification getPersistentNotification(int id) {
+		disableNotifications();
+		int icon = getAppIcon();
+		long when = System.currentTimeMillis();
+		Context c = getApplicationContext();
+		String contentTitle = "Running";
+		String contentText = "Chat head Message Box window";
+		String tickerText = String.format("%s: %s", contentTitle, contentText);
+
+		// getPersistentNotification() is called for every new window
+		// so we replace the old notification with a new one that has
+		// a bigger id
+		Intent notificationIntent = getPersistentNotificationIntent(id);
+
+		PendingIntent contentIntent = null;
+
+		if (notificationIntent != null) {
+			contentIntent = PendingIntent.getService(this, 0,
+					notificationIntent,
+					// flag updates existing persistent notification
+					PendingIntent.FLAG_UPDATE_CURRENT);
+		}
+
+		Notification notification = new Notification(icon, tickerText, when);
+		notification.setLatestEventInfo(c, contentTitle, contentText,
+				contentIntent);
+		return notification;
+	}
+
+	@Override
+	public Notification getHiddenNotification(int id) {
+		disableNotifications();
+		// same basics as getPersistentNotification()
+		int icon = getHiddenIcon();
+		long when = System.currentTimeMillis();
+		Context c = getApplicationContext();
+		String contentTitle = "Minimized";
+		String contentText = "Chat Head Message box window";
+		String tickerText = String.format("%s: %s", contentTitle, contentText);
+
+		// the difference here is we are providing the same id
+		Intent notificationIntent = getHiddenNotificationIntent(id);
+
+		PendingIntent contentIntent = null;
+
+		if (notificationIntent != null) {
+			contentIntent = PendingIntent.getService(this, 0,
+					notificationIntent,
+					// flag updates existing persistent notification
+					PendingIntent.FLAG_UPDATE_CURRENT);
+		}
+
+		Notification notification = new Notification(icon, tickerText, when);
+		notification.setLatestEventInfo(c, contentTitle, contentText,
+				contentIntent);
+		return notification;
 	}
 
 	// //////////////SMSThread functions/////////////////////////////
