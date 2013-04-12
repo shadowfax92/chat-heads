@@ -1,8 +1,10 @@
 package com.shadowfax.apps.chatheads;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import wei.mark.standout.StandOutWindow;
 import wei.mark.standout.constants.StandOutFlags;
@@ -56,6 +58,8 @@ import android.widget.Toast;
  */
 public class ChatHeadWindow extends StandOutWindow {
 
+	public static Map<Integer, Mediator> chatHeadIdToMediatorObjectMap=new HashMap<Integer, Mediator>();
+	
 	public static final int HIDE_INTENT = 0;
 	public static final int CLOSE_INTENT = 1;
 	public static final int SHOW_INTENT = 2;
@@ -67,7 +71,6 @@ public class ChatHeadWindow extends StandOutWindow {
 
 	public ImageView closeButtonImage, userImage, plusButtonImage;
 	public ImageButton chatHeadImageButton;
-	public Mediator mediatorObject;
 	public TextView userNameTextView;
 	
 	public int toggleChatMessageWindowFlag = 0;//if 0 then hidden and 1 then displayed
@@ -105,7 +108,7 @@ public class ChatHeadWindow extends StandOutWindow {
 
 		final int id_current_multiwindow = id;
 		current_window_id_public = id;
-		final int unique_id_msg_box = StandOutWindow.myGetUniqueId(getClass());
+		final int unique_id_msg_box = id_current_multiwindow;
 		msgbox_window_id_public = unique_id_msg_box;
 		
 		closeButtonImage.setOnClickListener(new OnClickListener() {
@@ -193,6 +196,7 @@ public class ChatHeadWindow extends StandOutWindow {
 	}
 
 	public void toggleChatMessageWindow(int msg_box_id, int my_id) {
+		Mediator mediator_Object = chatHeadIdToMediatorObjectMap.get(my_id);
 		if (toggleChatMessageWindowFlag == 0) {
 
 			// before displaying move the chatHead to the top
@@ -210,11 +214,11 @@ public class ChatHeadWindow extends StandOutWindow {
 			// show the window
 			// StandOutWindow.show(this, MessageBoxWindow.class, msg_box_id);
 			Bundle data = new Bundle();
-			data.putLong("sender_id",mediatorObject.senderId);
-			data.putString("sender_display_name", mediatorObject.messageSenderDisplayName);
-			data.putString("sender_number", mediatorObject.messageSenderNumber);
-			data.putInt("message_thread_id",mediatorObject.messageThreadId);
-			data.putString("message_body", mediatorObject.messageBody);
+			data.putLong("sender_id",mediator_Object.senderId);
+			data.putString("sender_display_name", mediator_Object.messageSenderDisplayName);
+			data.putString("sender_number", mediator_Object.messageSenderNumber);
+			data.putInt("message_thread_id",mediator_Object.messageThreadId);
+			data.putString("message_body", mediator_Object.messageBody);
 			
 			sendData(my_id, MessageBoxWindow.class, msg_box_id, SHOW_INTENT,
 					data);
@@ -419,19 +423,33 @@ public class ChatHeadWindow extends StandOutWindow {
 
 	public void onReceiveData(int id, int requestCode, Bundle data,
 			Class<? extends StandOutWindow> fromCls, int fromId) {
+		
+		Mediator mediator_object;
+		
 		switch (requestCode) {
 		case IncomingSmsBroadcastReceiver.SHOW_CHAT_HEAD_WINDOW_INTENT:
-			String message_body=data.getString("message_body");
-			String message_sender_number=data.getString("message_sender_number");
+			String message_body = data.getString("message_body");
+			String message_sender_number = data
+					.getString("message_sender_number");
 
-			mediatorObject=new Mediator(this, message_body, message_sender_number);
-			mediatorObject.initMediatorObjet();
+			if(chatHeadIdToMediatorObjectMap.get(id)==null)
+			{
+				mediator_object = new Mediator(this, message_body,
+						message_sender_number);
+				mediator_object.initMediatorObjet();
+				
+				senderName = mediator_object.messageSenderDisplayName;
+				senderImage = mediator_object.senderImage;
+				userNameTextView.setText(senderName);
+				createRoundedImage2(currentView, 100, 100, senderImage);
+				
+				chatHeadIdToMediatorObjectMap.put(id, mediator_object);
+			}
+			else
+			{
+				mediator_object=chatHeadIdToMediatorObjectMap.get(id);
+			}
 			
-			senderName=mediatorObject.messageSenderDisplayName;
-			senderImage=mediatorObject.senderImage;
-			
-			userNameTextView.setText(senderName);
-			createRoundedImage2(currentView, 100, 100, senderImage);
 			
 			break;
 
