@@ -5,7 +5,7 @@ Chat heads is an android Application that simplifies how messaging is done in An
 
 
 ##Code structure
-- Lastest version of the code is present here. Before this version, I had two other versions v1 and v2. Both of these versions where separate repositories. So, to unify all code under a single directory, I have added the two versions (along with their .git folder) in a separate sub-directory name chat_heads_v1, chat_heads_v2 respectively. Sorry for the inconvenience.
+- Lastest version of the code is present here. Before this version, I had two other versions [chat_heads_v1](https://github.com/shadowfax92/CH_Android) and [chat_heads_v2](https://github.com/shadowfax92/CH_v3). Both of these versions where separate repositories. So, to unify all code under a single directory, I have added the two versions in a separate sub-directory name chat_heads_v1, chat_heads_v2 respectively. Sorry for the inconvenience.
 
 ##Screen shots
 ![Alt text](/../master/screenshots/49e4e967eaa8f85172c7fd3d404ef296.png?raw=true "chat heads in home screen")
