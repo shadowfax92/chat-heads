@@ -1,0 +1,1 @@
+- To edit the transparecy of the username textview change background in rounded_textview.xml in drawable.
